@@ -8,10 +8,21 @@
     "start": "next start"
   },
   "dependencies": {
+    "@chakra-ui/gatsby-plugin": "^2.0.0",
+    "@chakra-ui/react": "^1.6.0",
+    "@chakra-ui/system": "^1.6.4",
+    "@chakra-ui/toast": "^1.2.5",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.3.0",
     "bootstrap": "^5.0.0-beta3",
     "firebase": "^8.4.2",
+    "firebase-admin": "^9.6.0",
+    "framer-motion": "^4.1.10",
     "next": "^10.0.0",
+    "nookies": "^2.5.2",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "react-nextjs-toast": "^1.2.5",
+    "react-toast-notifications": "^2.4.4"
   }
 }

@@ -1,8 +1,9 @@
 import firebase from "firebase/app";
 import database from "firebase/database";
+import auth from "firebase/auth";
 
 const config = {  
-    apiKey: process.env.FIREBASE_API_KEY,  
+    apiKey: "AIzaSyB5tB_NvAxsQAd4aNL4gefm3KbHdRLDpig",  
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,  
     databaseURL: process.env.FIREBASE_DATABASE_URL,  
     projectId: process.env.FIREBASE_PROJECT_ID,  
@@ -11,22 +12,8 @@ const config = {
     appId: process.env.FIREBASE_APP_ID,
 };
 
-function getDatabase() {
-    if(firebase.apps.length === 0){
+export default function firebaseClient(){
+    if(!firebase.apps.length){
         firebase.initializeApp(config);
     }
-
-    return firebase.database();
-}
-
-export async function getFirebaseData(){
-    getDatabase()
-     .ref("users")
-     .once("value")
-     .then((snapshot) => {
-         console.log(snapshot.val());
-     })
-     .catch((err) => {
-         console.error(err.code);
-     });
 }

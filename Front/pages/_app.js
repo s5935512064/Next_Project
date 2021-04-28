@@ -1,7 +1,7 @@
-// import '../styles/globals.css'
+import "../styles/globals.css";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Layout from '../components/Layout'
-import {AuthProvider} from "../components/Auth"
+import {AuthProvider} from "../firebase/context"
 import { ChakraProvider } from "@chakra-ui/react"
 
 

@@ -11,7 +11,7 @@ export default function LoginPage() {
   const router = useRouter();
 
   auth.onAuthStateChanged(function (user) {
-    if (!user) {
+    if (user) {
       console.log(user);
       typeof window !== "undefined" && router.push("/");
     }

@@ -9,7 +9,8 @@ import { useCart } from "../../hooks/cart.hook";
 import { useRouter } from "next/router";
 import MenuIcon from "../Icons/menu";
 
-export default function Header() {
+
+export default function Header(){
     const [showHeader, setShowHeader] = useState({
       transform: "translate3d(100vw, 0, 0)",
     });
@@ -17,7 +18,7 @@ export default function Header() {
   
     const router = useRouter();
   
-    const user = useAuth();
+    const { user } = useAuth();
   
     // const cart = useCart().data;
     // const cartLength = Object.keys(cart).reduce((a, b) => a + cart[b].length, 0);
@@ -28,15 +29,15 @@ export default function Header() {
             <Link href="/">
               <a className={styles.logo}>PSU Care <span style={{color:"red"}}>Covid-19</span></a>
             </Link>
-            <div className={styles.rightContentMobile}>
-              {/* <Link href="/cart">
+            {/* <div className={styles.rightContentMobile}>
+              <Link href="/cart">
                 <div className={styles.cartContainer}>
                   <CartIcon width={28} height={28} className={styles.cartIcon} />
                   <div>
                     <span>{cartLength || 0}</span>
                   </div>
                 </div>
-              </Link> */}
+              </Link>
               <div className={styles.profileContainer}>
                 <MenuIcon
                   width={30}
@@ -47,7 +48,7 @@ export default function Header() {
                   }
                 />
                </div>
-            </div>
+            </div> */}
         </div>
         <div className={styles.rightMenu}>
             <div className={styles.menuContent} style={showHeader}>

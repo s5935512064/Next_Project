@@ -18,7 +18,7 @@ export default function Input({
         backgroundColor: focus && "white",
         margin: noMargin && 0,
       }}
-      ref={register && register({ required })}
+      ref={register({required: true})}
       onFocus={() => setFocus(true)}
       onBlur={() => setFocus(false)}
       {...props}

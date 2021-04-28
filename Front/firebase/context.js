@@ -10,6 +10,7 @@ export const useAuth = () => {
   console.log("useAuth");
   return useContext(authContext);
 };
+
 function useProvideAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -40,3 +41,5 @@ function useProvideAuth() {
     setUser,
   };
 }
+
+export default authContext;

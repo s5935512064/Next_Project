@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "./login.module.scss";
@@ -19,6 +20,10 @@ export default function LoginPage() {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>Login</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <a className={styles.logo}>PSU Care Covid-19</a>
       <div className={styles.content}>
         <div className={styles.switchContainer}>

@@ -52,7 +52,7 @@ export default function RegisterForm() {
       onSubmit={handleSubmit(onSubmit)}
       style={{ display: "flex", flexDirection: "column", paddingTop: 30 }}
     >
-      <hr style={{ width: "100%", height: 1, color: "#f6f6f655", marginTop: 50 }} />
+      {/* <hr style={{ width: "100%", height: 1, color: "#f6f6f655", marginTop: 50 }} /> */}
       <span
         style={{
           textAlign: "center",

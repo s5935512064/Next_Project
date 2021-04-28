@@ -8,13 +8,13 @@
     "start": "next start"
   },
   "dependencies": {
-    "@hookform/resolvers": "^1.0.0",
     "@chakra-ui/gatsby-plugin": "^2.0.0",
     "@chakra-ui/react": "^1.6.0",
     "@chakra-ui/system": "^1.6.4",
     "@chakra-ui/toast": "^1.2.5",
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.3.0",
+    "@hookform/resolvers": "^1.0.0",
     "bootstrap": "^5.0.0-beta3",
     "firebase": "^8.4.2",
     "firebase-admin": "^9.6.0",
@@ -22,12 +22,18 @@
     "next": "^10.0.0",
     "nookies": "^2.5.2",
     "react": "17.0.1",
-    "react-dom": "17.0.1",
+    "react-data-table-component": "^6.11.7",
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^6.9.2",
     "react-nextjs-toast": "^1.2.5",
+    "react-number-format": "^4.5.5",
     "react-toast-notifications": "^2.4.4",
+    "recharts": "^2.0.9",
     "sass": "^1.32.11",
     "split-string": "^6.1.0",
-    "react-hook-form": "^6.9.2",
+    "styled-components": "^5.2.3",
+    "swr": "^0.5.5",
+    "unfetch": "^4.2.0",
     "yup": "^0.29.3"
   }
 }

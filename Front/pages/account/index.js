@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -73,6 +74,10 @@ const schema = yup.object().shape({
     if (!user && !loading) useRouter().push("/login");
     return (
         <main className={styles.container}>
+        <Head>
+            <title>My Account</title>
+            <link rel="icon" href="/favicon.ico" />
+        </Head>
           <h1 className={styles.title}>My Account</h1>
           <div className={styles.content}>
             <div className={styles.accountContainer}>

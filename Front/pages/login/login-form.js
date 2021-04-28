@@ -7,6 +7,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Link from "next/link";
 import emailLogin from "../../firebase/login";
+import { Checkbox, CheckboxGroup } from "@chakra-ui/react"
 
 
 const schema = yup.object().shape({
@@ -58,7 +59,8 @@ export default function LoginForm() {
           {errors.password.message}
         </span>
       )}
-
+      
+      <Checkbox>Remember Me</Checkbox>
       <Button type="submit">Login</Button>
       {loginError && (
         <span

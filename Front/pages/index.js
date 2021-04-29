@@ -7,7 +7,7 @@ import useSWR from 'swr';
 import fetch from 'unfetch';
 import DataTable from 'react-data-table-component';
 import columns from '../components/DataTableColumns/index';
-import { Spinner, Box, Center, Grid, GridItem, Text, Stack } from "@chakra-ui/react"
+import { Spinner, Box, Center, Grid, GridItem, Text, Stack, Spacer } from "@chakra-ui/react"
 import NumberFormat from 'react-number-format';
 
 
@@ -60,7 +60,6 @@ export default function Home() {
         `}
       </style>
       <main>
-      
       <Grid
         h="250px"
         templateRows="repeat(2, 1fr)"
@@ -112,6 +111,7 @@ export default function Home() {
           </Box>
         </GridItem>
       </Grid>
+      <Text textAlign={'right'}> ข้อมูล ณ วันที่ {thailand.UpdateDate}</Text>
       <DataTable
         title="COVID-19 Summary"
         customStyles={customStyle}

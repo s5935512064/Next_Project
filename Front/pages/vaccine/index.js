@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -9,6 +9,8 @@ import styles from "./vaccine.module.scss";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { VaccineDatabase } from "../../firebase/vaccine";
+import { Spinner, Box, Grid, GridItem, Spacer,Center, Stack, Text, List, ListItem, ListIcon } from "@chakra-ui/react"
+import { InfoIcon, EmailIcon, PhoneIcon,  } from '@chakra-ui/icons'
 
 
 const schema = yup.object().shape({
@@ -30,9 +32,11 @@ const schema = yup.object().shape({
     .min(1, "* Performance should be guarantee your vaccine."),
 });
 
-export default function RegisterForm() {
+export default function Vaccine() {
     const { user, loading } = useAuth();
-  const [addVaccineError, setAddVaccineError] = useState();
+    const [photo, setPhoto] = useState(null);
+    const [addVaccineError, setAddVaccineError] = useState();
+
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
@@ -42,50 +46,61 @@ export default function RegisterForm() {
           description,
           price,
           performance,
+          photo,
+          finalEvent: () => window.location.reload(false),
         })
           .then(() =>
           setAddVaccineError(
               "You have add vaccine succesfully."
             )
           )
-          .catch((e) => setRegisterError(e.message));
+          .catch((e) => setAddVaccineError(e.message));
 
     if (!user && !loading) useRouter().push("/login");        
 
   return (
     <div className={styles.container}>
         <Head>
-        <title>Add Vaccine</title>
+        <title>Add Vaccine </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <a className={styles.logo}>Add a COVID-19 Vaccines.</a>
+
+      <a className={styles.title}>Add a COVID-19 Vaccines.</a>
       <div className={styles.content}>
       <form
       onSubmit={handleSubmit(onSubmit)}
       style={{ display: "flex", flexDirection: "column", paddingTop: 5 }}
     >
+       <div className={styles.inputContainer}>
+          <span>Name</span>
       <Input
         name="name"
         register={register}
         placeholder="Vaccine Name"
         error={errors.name}
       />
+      </div>
       {errors.name && (
-        <span style={{ color: "red", marginTop: 4, fontSize: 14 }}>
+        <span style={{ color: "red", marginTop: 1, fontSize: 14 }}>
           {errors.name.message}
         </span>
       )}
+       <div className={styles.inputContainer}>
+          <span>Detail</span>
       <Input
         name="description"
         register={register}
         placeholder="Vaccine Detail"
         error={errors.description}
       />
+      </div>
       {errors.description && (
-        <span style={{ color: "red", marginTop: 4, fontSize: 14 }}>
+        <span style={{ color: "red", marginTop: 1, fontSize: 14 }}>
           {errors.description.message}
         </span>
       )}
+       <div className={styles.inputContainer}>
+          <span>Price</span>
       <Input
         name="price"
         register={register}
@@ -93,23 +108,43 @@ export default function RegisterForm() {
         type="number"
         error={errors.price}
       />
+      </div>
       {errors.price && (
-        <span style={{ color: "red", marginTop: 4, fontSize: 14 }}>
+        <span style={{ color: "red", marginTop: 1, fontSize: 14 }}>
           {errors.price.message}
         </span>
       )}
-      <Input
+       <div className={styles.inputContainer}>
+          <span>Efficiency</span>
+          <Input
         name="performance"
         register={register}
         placeholder="Performance"
         type="number"
         error={errors.performance}
       />
+                
+      </div>
+     
       {errors.performance && (
-        <span style={{ color: "red", marginTop: 4, fontSize: 14 }}>
+        <span style={{ color: "red", marginTop: 1, fontSize: 14 }}>
           {errors.performance.message}
         </span>
       )}
+       <div className={styles.inputContainer}>
+                  <span>Photo</span>
+                  <label className={styles.uploadButton}>
+                    <input
+                      type="file"
+                      onChange={(e) => setPhoto(e.target.files[0])}
+                      accept="image/*"
+                      style={{ display: "none" }}
+                    />
+                    {photo?.name || "Select File"}
+                  </label>
+                </div>
+
+
       {/* errors will return when field validation fails  */}
       {errors.exampleRequired && <span>This field is required</span>}
 
@@ -117,7 +152,7 @@ export default function RegisterForm() {
         <span
           style={{
             color: "green",
-            marginTop: 20,
+            marginTop: 10,
             fontSize: 14,
             marginBottom: -10,
           }}
@@ -127,9 +162,13 @@ export default function RegisterForm() {
       )}
 
       <Button type="submit">Add a Vaccine</Button>
- 
     </form>
-      </div>
+    <div className={styles.vaccineContainer}>
+            my Vaccine
+    </div>
+    </div>
+   
+
     </div>
   );
 }

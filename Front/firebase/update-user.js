@@ -2,7 +2,7 @@ import { firebase, auth, db } from "../config/firebaseClient";
 
 function updateUser({ email, name, surname, phoneNumber, photo, finalEvent }) {
   const currentUser = auth.currentUser.uid;
-
+  // console.log(email)
   if (photo) {
     return firebase
       .storage()

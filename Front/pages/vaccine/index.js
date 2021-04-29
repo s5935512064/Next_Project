@@ -4,14 +4,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {useAuth} from '../../firebase/context';
+import { db } from "../../config/firebaseClient";
 import { useRouter } from "next/router";
 import styles from "./vaccine.module.scss";
 import Input from "../../components/Input";
-import Button from "../../components/Button";
+import Button1 from "../../components/Button";
 import { VaccineDatabase } from "../../firebase/vaccine";
-import { Spinner, Box, Grid, GridItem, Spacer,Center, Stack, Text, List, ListItem, ListIcon } from "@chakra-ui/react"
-import { InfoIcon, EmailIcon, PhoneIcon,  } from '@chakra-ui/icons'
-
+import { Spinner, Table,Thead,Tbody,Tfoot,Tr,Th,Td,TableCaption,Button } from "@chakra-ui/react"
+import {deleteVaccine} from "../../firebase/deleteVaccine";
 
 const schema = yup.object().shape({
   name: yup
@@ -32,10 +32,11 @@ const schema = yup.object().shape({
     .min(1, "* Performance should be guarantee your vaccine."),
 });
 
-export default function Vaccine() {
+export default function Vaccine({ data, query }) {
     const { user, loading } = useAuth();
     const [photo, setPhoto] = useState(null);
     const [addVaccineError, setAddVaccineError] = useState();
+    const { id, name, description,image,price,performance } = data
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
@@ -56,7 +57,17 @@ export default function Vaccine() {
           )
           .catch((e) => setAddVaccineError(e.message));
 
-    if (!user && !loading) useRouter().push("/login");        
+    const onSubmit2 = async (id) => {
+            // console.log(id)
+            deleteVaccine({
+            id,
+            finalEvent: () => window.location.reload(false),
+          })}
+
+
+    
+    if (!user && !loading) useRouter().push("/login");
+    if (loading) return <div><Spinner /></div>        
 
   return (
     <div className={styles.container}>
@@ -161,10 +172,35 @@ export default function Vaccine() {
         </span>
       )}
 
-      <Button type="submit">Add a Vaccine</Button>
+      <Button1 type="submit">Add a Vaccine</Button1>
     </form>
     <div className={styles.vaccineContainer}>
-            my Vaccine
+    <div className={styles.products}>
+                  <Table variant="simple">
+                    <TableCaption>Manage COVID-19 Vaccine</TableCaption>
+                    <Thead>
+                      <Tr>
+                        <Th>Name</Th>
+                        <Th isNumeric>Efficiency</Th>
+                        <Th isNumeric>Price</Th>
+                        <Th>Status</Th>
+                      </Tr>
+                    </Thead>    
+              {!loading &&
+               data.map((product, key) => {
+                return (
+                        <Tbody key={key}>
+                        <Tr>
+                        <Td>{product.name}</Td>
+                        <Td isNumeric>{product.performance}%</Td>
+                        <Td isNumeric>{product.price}$</Td>
+                        <Td ><Button type="submit" colorScheme="red" onClick={() => onSubmit2(product.id)}>Delete</Button></Td>
+                        </Tr>
+                        </Tbody>
+                      );
+                      })}
+                  </Table>
+          </div>
     </div>
     </div>
    
@@ -172,3 +208,25 @@ export default function Vaccine() {
     </div>
   );
 }
+
+Vaccine.getInitialProps = async function ({ query }) {
+  let data = {};
+  let error = {};
+
+  await db
+    .collection("Vaccine")
+    .get()
+    .then(function (querySnapshot) {
+      const products = querySnapshot.docs.map(function (doc) {
+        return { id: doc.id, ...doc.data() };
+      });
+      data = products;
+    })
+    .catch((e) => (error = e));
+
+  return {
+    data,
+    error,
+    query,
+  };
+};

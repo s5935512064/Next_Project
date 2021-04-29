@@ -29,6 +29,7 @@
       @include lg {
         width: 45%;
         margin-right: auto;
+        margin-left: auto;
       }
     }
     .passwordContainer {
@@ -60,6 +61,12 @@
       display: flex;
       justify-content: center;
       word-break: break-all;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 40px;
+      padding-bottom: 30px;
     }
   }
 }

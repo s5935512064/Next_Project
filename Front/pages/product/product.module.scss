@@ -1,28 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 @import "../../styles/breakpoints.scss";
 
 .container {
+
   width: 100%;
+
   .main {
     .header {
       display: flex;
       margin-bottom: 40px;
       flex-direction: column;
+      
 
       @include md {
         flex-direction: row;
       }
 
       .title {
+        font-family: 'Poppins', sans-serif;
         font-size: 28px;
         margin: 0;
-
-        .emoji {
-          font-weight: 400;
-          font-family: apple color emoji, segoe ui emoji, noto color emoji,
-            android emoji, emojisymbols, emojione mozilla, twemoji mozilla,
-            segoe ui symbol;
-          margin-right: 10px;
-        }
       }
 
       .headerButtons {

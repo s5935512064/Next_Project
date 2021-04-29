@@ -19,7 +19,7 @@ export default function Product({ data, query }) {
         <main className={styles.main}>
           <div className={styles.header}>
             <h1 className={styles.title}>
-              Vaccine
+              COVID-19 Vaccine
             </h1>
           </div>
           <div className={styles.products}>

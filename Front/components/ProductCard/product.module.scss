@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
 .container {
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,8 +32,10 @@
     flex-grow: 1;
 
     .brandText {
+      font-family: 'Poppins', sans-serif;
       font-size: 16px;
       margin-bottom: 10px;
+      font-weight: bold;
     }
 
     h4 {

@@ -1,17 +1,15 @@
 import { firebase, auth, db } from "../config/firebaseClient";
 
 function VaccineDatabase({ id, name, description, price, performance, photo, finalEvent }) {
-  const currentUser = auth.currentUser.uid;
-    
     if (photo) {
     return firebase
       .storage()
-      .ref("vaccines/" + currentUser + (photo?.name || "0"))
+      .ref("vaccines/" + id + (photo?.name || "0"))
       .put(photo)
       .then((doc) => {
         doc.ref.getDownloadURL().then((url) => {
           db.collection("Vaccine")
-            .doc(currentUser)
+            .doc(id)
             .set({
               name,
               description,

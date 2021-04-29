@@ -34,6 +34,7 @@ export default function Header(){
                 </>
             ) : (
                 <>
+                <Link href="/product">Vaccine</Link>
                 <Link href="/login">Login</Link>
                 <Link href="/login">Register</Link>
                 </>
@@ -73,6 +74,7 @@ export default function Header(){
                   </>
                 ) : (
                   <>
+                    <Link href="/product">Vaccine</Link>
                     <Link href="/login">Login</Link>
                     <Link href="/login">Register</Link>
                   </>

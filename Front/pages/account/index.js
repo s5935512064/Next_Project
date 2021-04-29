@@ -9,6 +9,8 @@ import {useAuth} from '../../firebase/context';
 import { useRouter } from "next/router";
 import styles from "./account.module.scss";
 import { updateUser } from "../../firebase/update-user";
+import { Image, Center, Stack, Text, List, ListItem, ListIcon } from "@chakra-ui/react"
+import { ArrowLeftIcon, InfoIcon, EmailIcon, PhoneIcon,  } from '@chakra-ui/icons'
 
 const schema = yup.object().shape({
     name: yup
@@ -160,6 +162,34 @@ const schema = yup.object().shape({
               </form>
             </div>
             <hr />
+            <div className={styles.accountContainer}>
+            <Center mb="6">
+              <Stack spacing={2}>
+              <Image
+                borderRadius="full"
+                objectFit="cover"
+                boxSize="220px"
+                src={user?.photoUrl}
+                boxShadow="base"
+              />
+              </Stack>
+            </Center>
+            <List spacing={3}>
+            <ListItem>
+              <ListIcon as={InfoIcon} color="green.500" />
+                  Name: {user?.name} {user?.surname} 
+            </ListItem>
+            <ListItem>
+              <ListIcon as={EmailIcon} color="green.500" />
+              E-mail: {user?.email}
+            </ListItem>
+            <ListItem>
+              <ListIcon as={PhoneIcon} color="green.500" />
+              Phone: {user?.phoneNumber}
+            </ListItem>
+          </List>
+            
+          </div>
           </div>
         </main>
     );

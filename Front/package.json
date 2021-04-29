@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@chakra-ui/gatsby-plugin": "^2.0.0",
+    "@chakra-ui/icons": "^1.0.12",
     "@chakra-ui/react": "^1.6.0",
     "@chakra-ui/system": "^1.6.4",
     "@chakra-ui/toast": "^1.2.5",

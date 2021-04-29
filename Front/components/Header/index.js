@@ -28,7 +28,7 @@ export default function Header(){
             <div className={styles.menuContent} style={showHeader}>
             {user ? (
                 <>
-                <Link href="/">Get Vaccine</Link>
+                <Link href="/vaccine">Add Vaccine</Link>
                 <Link href="/account">My Account</Link>
                 <Link href="/account/logout">Logout</Link>
                 </>
@@ -67,7 +67,7 @@ export default function Header(){
               <div className={styles.dropdownMenu}>
                 {user ? (
                   <>
-                    <Link href="/">Get Vaccine</Link>
+                    <Link href="/vaccine">Add Vaccine</Link>
                     <Link href="/account">My Account</Link>
                     <Link href="/account/logout">Logout</Link>
                   </>

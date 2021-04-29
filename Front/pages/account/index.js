@@ -8,6 +8,7 @@ import Button from "../../components/Button";
 import {useAuth} from '../../firebase/context';
 import { useRouter } from "next/router";
 import styles from "./account.module.scss";
+import { updateUser } from "../../firebase/update-user";
 
 const schema = yup.object().shape({
     name: yup
@@ -19,31 +20,15 @@ const schema = yup.object().shape({
       .required("* Surname is required.")
       .min(2, "* Surname is too short"),
     email: yup.string().email().required("* Email is required."),
-    phone: yup
+    phoneNumber: yup
       .string()
-      .notRequired()
-      .matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g, {
-        message: "Invalid Phone Number",
-        excludeEmptyString: true,
-      }),
+      .required("Invalid Phone Number")
+      .min(10, "* Phone Number is too short")
   });
 
-  const schema2 = yup.object().shape({
-    currentPassword: yup
-      .string()
-      .required("* Current Password is required.")
-      .min(8, "* Password is too short - should be 8 chars minimum."),
-    newPassword: yup
-      .string()
-      .required("* New Password is required.")
-      .min(8, "* Password is too short - should be 8 chars minimum."),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("newPassword"), null], "Passwords must match"),
-  });
 
   export default function AccountPage() {
-    const [passwordError, setError] = useState(null);
+    const [updateError, setUpdateError] = useState();
     const [photo, setPhoto] = useState(null);
     const { user, loading } = useAuth();
   
@@ -51,25 +36,21 @@ const schema = yup.object().shape({
       resolver: yupResolver(schema),
     });
   
-    const {
-      register: register2,
-      handleSubmit: handleSubmit2,
-      errors: errors2,
-      getValues,
-    } = useForm({
-      resolver: yupResolver(schema2),
-    });
-  
-    const onSubmit = ({ email, phone, name, surname }) => {
+    const onSubmit = ({ email, phoneNumber, name, surname }) =>
       updateUser({
         email,
-        phone,
+        phoneNumber,
         name,
         surname,
         photo,
         finalEvent: () => window.location.reload(false),
-      });
-    };
+      }).then(() =>
+      setUpdateError(
+        "Information updated successfully."
+      )
+    )
+    .catch((e) => setUpdateError(e.message));
+  
 
     if (!user && !loading) useRouter().push("/login");
     return (
@@ -134,16 +115,17 @@ const schema = yup.object().shape({
                 <div className={styles.inputContainer}>
                   <span>Phone Number</span>
                   <Input
-                    name="phone"
+                    name="phoneNumber"
                     defaultValue={user?.phoneNumber}
                     noMargin
                     register={register}
-                    error={errors.phone}
+                    placeholder="Phone Number"
+                    error={errors.phoneNumber}
                   />
                 </div>
-                {errors.phone && (
+                {errors.phoneNumber && (
                   <span style={{ color: "red", marginTop: 4, fontSize: 14 }}>
-                    {errors.phone.message}
+                    {errors.phoneNumber.message}
                   </span>
                 )}
                 <div className={styles.inputContainer}>
@@ -159,6 +141,19 @@ const schema = yup.object().shape({
                     {photo?.name || "Select File"}
                   </label>
                 </div>
+
+                {updateError && (
+                    <span
+                      style={{
+                        color: "red",
+                        marginTop: 20,
+                        fontSize: 14,
+                        marginBottom: -10,
+                      }}
+                    >
+                      {updateError}
+                    </span>
+                  )}
                 <Button type="submit" name="update_button" value="Update">
                   Update
                 </Button>

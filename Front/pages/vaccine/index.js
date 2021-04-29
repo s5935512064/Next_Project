@@ -1,8 +1,11 @@
+import Head from 'next/head'
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
+import {useAuth} from '../../firebase/context';
+import { useRouter } from "next/router";
+import styles from "./vaccine.module.scss";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { VaccineDatabase } from "../../firebase/vaccine";
@@ -28,6 +31,7 @@ const schema = yup.object().shape({
 });
 
 export default function RegisterForm() {
+    const { user, loading } = useAuth();
   const [addVaccineError, setAddVaccineError] = useState();
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
@@ -46,31 +50,24 @@ export default function RegisterForm() {
           )
           .catch((e) => setRegisterError(e.message));
 
-  return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ display: "flex", flexDirection: "column", paddingTop: 30 }}
-    >
-      {/* <hr style={{ width: "100%", height: 1, color: "#f6f6f655", marginTop: 50 }} /> */}
-      <span
-        style={{
-          textAlign: "center",
-          marginTop: -35,
-          padding: 15,
-          backgroundColor: "white",
-          display: "flex",
-          alignSelf: "center",
-          width: "max-content",
-          fontWeight: "500",
-        }}
-      >
-        Add a COVID-19 Vaccines.
-      </span>
+    if (!user && !loading) useRouter().push("/login");        
 
+  return (
+    <div className={styles.container}>
+        <Head>
+        <title>Add Vaccine</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <a className={styles.logo}>Add a COVID-19 Vaccines.</a>
+      <div className={styles.content}>
+      <form
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ display: "flex", flexDirection: "column", paddingTop: 5 }}
+    >
       <Input
         name="name"
         register={register}
-        placeholder="Name"
+        placeholder="Vaccine Name"
         error={errors.name}
       />
       {errors.name && (
@@ -81,7 +78,7 @@ export default function RegisterForm() {
       <Input
         name="description"
         register={register}
-        placeholder="Description"
+        placeholder="Vaccine Detail"
         error={errors.description}
       />
       {errors.description && (
@@ -132,5 +129,7 @@ export default function RegisterForm() {
       <Button type="submit">Add a Vaccine</Button>
  
     </form>
+      </div>
+    </div>
   );
 }

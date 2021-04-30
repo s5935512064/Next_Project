@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
+import { useRouter } from "next/router";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Link from "next/link";
 import emailLogin from "../../firebase/login";
 import { Checkbox, CheckboxGroup } from "@chakra-ui/react"
+import { auth } from "../../config/firebaseClient";
 
 
 const schema = yup.object().shape({
@@ -20,7 +21,7 @@ const schema = yup.object().shape({
 
 export default function LoginForm() {
   const [loginError, setLoginError] = useState();
-
+  const router = useRouter();
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
@@ -30,6 +31,14 @@ export default function LoginForm() {
       setLoginError(e.message)
     );
   };
+
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      console.log(user);
+      typeof window !== "undefined" && router.push("/");
+    }
+  });
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}

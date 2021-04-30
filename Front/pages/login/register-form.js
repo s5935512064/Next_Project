@@ -26,7 +26,7 @@ const schema = yup.object().shape({
 
 export default function RegisterForm() {
   const [registerError, setRegisterError] = useState();
-  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+  const { register, handleSubmit, watch, errors } = useForm({
     resolver: yupResolver(schema),
   });
   const onSubmit = ({ email, password, name, surname }) =>
@@ -46,6 +46,7 @@ export default function RegisterForm() {
           .catch((e) => setRegisterError(e.message));
       })
       .catch((error) => setRegisterError(error.message));
+      console.log("finish")
 
   return (
     <form
@@ -115,7 +116,7 @@ export default function RegisterForm() {
       )}
       {/* errors will return when field validation fails  */}
       {errors.exampleRequired && <span>This field is required</span>}
-
+      
       {registerError && (
         <span
           style={{
@@ -128,7 +129,6 @@ export default function RegisterForm() {
           {registerError}
         </span>
       )}
-
       <Button type="submit">Register</Button>
  
     </form>

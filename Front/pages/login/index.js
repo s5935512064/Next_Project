@@ -8,16 +8,6 @@ import { auth } from "../../config/firebaseClient";
 
 export default function LoginPage() {
   const [page, setPage] = useState("login");
-
-  const router = useRouter();
-
-  auth.onAuthStateChanged(function (user) {
-    if (user) {
-      console.log(user);
-      typeof window !== "undefined" && router.push("/");
-    }
-  });
-
   return (
     <div className={styles.container}>
       <Head>

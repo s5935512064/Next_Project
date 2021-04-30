@@ -7,13 +7,15 @@ import { ChakraProvider } from "@chakra-ui/react"
 
 function MyApp({ Component, pageProps }) {
   return(
-    <AuthProvider>
-      <Layout>
-        <ChakraProvider>
-          <Component {...pageProps} />
-        </ChakraProvider>
-      </Layout>
-    </AuthProvider>
+      
+          <AuthProvider>
+          <ChakraProvider>
+              <Layout>
+              <Component {...pageProps} />
+              </Layout>
+          </ChakraProvider>
+          </AuthProvider>
+     
   ) 
 }
 

@@ -28,6 +28,7 @@ export default function Home() {
   
   const { data, error } = useSWR(URL, fetcher, { revalidateOnFocus: false })
   const { data: thailand} = useSWR(URL2, fetcher2, { revalidateOnFocus: false })
+  
   const auth = useAuth();
 
     
